@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "PrimaryFlightDisplay"
-  spec.version = "0.5.6"
+  spec.version = "0.6.0"
   spec.summary = "Primary Flight Display SpriteKit Framework for Mac + iOS."
   spec.homepage = "https://github.com/kouky/PrimaryFlightDisplay"
   spec.license = { type: 'MIT', file: 'LICENSE' }
