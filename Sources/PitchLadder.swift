@@ -17,8 +17,8 @@ class PitchLadder: SKNode {
     init(sceneSize: CGSize, style: PitchLadderStyleType) {
         self.sceneSize = sceneSize
         let maskSize = CGSize(
-            width: CGFloat(style.majorLineWidth) * 3.0,
-            height: sceneSize.pointsPerDegree * 44)
+            width:  CGFloat(style.majorLineWidth) * 3.0,
+            height: sceneSize.pointsPerDegree * (CGFloat(style.magnitudeDisplayDegree) + 4))
         self.maskNode = SKSpriteNode(color: SKColor.blackColor(), size: maskSize)
         super.init()
         

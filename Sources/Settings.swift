@@ -30,6 +30,33 @@ public struct DefaultSettings: SettingsType {
     public init() {}
 }
 
+public struct DefaultSmallScreenSettings: SettingsType {
+    public var horizon: HorizonStyleType = DefaultHorizonStyle()
+    public var attitudeReferenceIndex: AttitudeReferenceIndexStyleType = DefaultAttitudeReferenceIndexStyle()
+    public var pitchLadder: PitchLadderStyleType = DefaultPitchLadderStyle()
+    public var bankIndicator: BankIndicatorStyleType = DefaultBankIndicatorStyle()
+    public var altimeter: TapeIndicatorStyleType = DefaultAltimeterStyle()
+    public var airSpeedIndicator: TapeIndicatorStyleType = DefaultAirspeedIndicatorStyle()
+    public var headingIndicator: TapeIndicatorStyleType = DefaultHeadingIndicatorStyle()
+    
+    public init() {
+        headingIndicator.pointsPerUnitValue = 8
+        headingIndicator.size.width = 800
+        headingIndicator.size.height = 40
+        headingIndicator.markerTextOffset = 15
+        headingIndicator.minorMarkerFrequency = 1
+        headingIndicator.majorMarkerFrequency = 10
+
+        attitudeReferenceIndex.sideBarWidth = 40
+        attitudeReferenceIndex.sideBarHeight = 15
+        
+        bankIndicator.arcRadius = 100
+        altimeter.size = CGSize(width: 60, height: 220)
+        airSpeedIndicator.size = CGSize(width: 60, height: 220)
+        pitchLadder.magnitudeDisplayDegree = 20
+    }
+}
+
 // MARK: HorizonStyle
 
 public protocol HorizonStyleType {
@@ -78,6 +105,7 @@ public protocol PitchLadderStyleType {
     var minorLineWidth:     Int { get set }
     var majorLineWidth:     Int { get set }
     var markerTextOffset:   Int { get set }
+    var magnitudeDisplayDegree: Int { get set } // Keep between 0 and 180
 }
 
 public struct DefaultPitchLadderStyle: PitchLadderStyleType {
@@ -88,6 +116,7 @@ public struct DefaultPitchLadderStyle: PitchLadderStyleType {
     public var minorLineWidth = 20
     public var majorLineWidth = 50
     public var markerTextOffset = 10
+    public var magnitudeDisplayDegree = 40
     
     public init() {}
 }
