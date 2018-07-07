@@ -29,7 +29,7 @@ The framework enables convenient embedding and animation of a primary flight dis
 ## Requirements
 
 - iOS 9.0+ / Mac OS X 10.10+
-- Xcode 7.2+
+- Xcode 9.3+
 
 ## Installation
 
