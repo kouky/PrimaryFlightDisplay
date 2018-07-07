@@ -27,7 +27,7 @@ class BankIndicator: SKNode {
 
 extension BankIndicator: AttitudeSettable {
     
-    func setAttitude(attitude: AttitudeType) {
+    func setAttitude(_ attitude: AttitudeType) {
         bankArc.run(attitude.rollAction())
     }
 }

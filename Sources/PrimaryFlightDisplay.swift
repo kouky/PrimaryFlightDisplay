@@ -30,27 +30,27 @@ public class PrimaryFlightDisplayView: SKView {
         ignoresSiblingOrder = true        
     }
     
-    public func setHeadingDegree(degree: Double) {
+    public func setHeadingDegree(_ degree: Double) {
         if let scene = scene as? PrimaryFlightDisplayScene {
-            scene.setHeadingDegree(degree: degree)
+            scene.setHeadingDegree(degree)
         }
     }
     
-    public func setAirSpeed(airSpeed: Double) {
+    public func setAirSpeed(_ airSpeed: Double) {
         if let scene = scene as? PrimaryFlightDisplayScene {
-            scene.setAirSpeed(airSpeed: airSpeed)
+            scene.setAirSpeed(airSpeed)
         }
     }
 
-    public func setAltitude(altitude: Double) {
+    public func setAltitude(_ altitude: Double) {
         if let scene = scene as? PrimaryFlightDisplayScene {
-            scene.setAltitude(altitude: altitude)
+            scene.setAltitude(altitude)
         }
     }
     
     public func setAttitude(rollRadians: Double, pitchRadians: Double) {
         if let scene = scene as? PrimaryFlightDisplayScene {
-            scene.setAttitude(attitude: Attitude(pitchRadians: pitchRadians, rollRadians: rollRadians))
+            scene.setAttitude(Attitude(pitchRadians: pitchRadians, rollRadians: rollRadians))
         }
     }
 }
@@ -103,24 +103,24 @@ class PrimaryFlightDisplayScene: SKScene {
         headingIndicator.recycleCells()
     }
     
-    func setHeadingDegree(degree: Double) {
+    func setHeadingDegree(_ degree: Double) {
         headingIndicator.value = degree
     }
     
-    func setAltitude(altitude: Double) {
+    func setAltitude(_ altitude: Double) {
         altimeter.value = altitude
     }
 
-    func setAirSpeed(airSpeed: Double) {
+    func setAirSpeed(_ airSpeed: Double) {
         airSpeedIndicator.value = airSpeed
     }
 }
 
 extension PrimaryFlightDisplayScene: AttitudeSettable {
 
-    func setAttitude(attitude: AttitudeType) {
-        horizon.setAttitude(attitude: attitude)
-        pitchLadder.setAttitude(attitude: attitude)
-        bankIndicator.setAttitude(attitude: attitude)
+    func setAttitude(_ attitude: AttitudeType) {
+        horizon.setAttitude(attitude)
+        pitchLadder.setAttitude(attitude)
+        bankIndicator.setAttitude(attitude)
     }
 }

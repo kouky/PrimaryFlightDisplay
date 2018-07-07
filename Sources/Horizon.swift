@@ -44,7 +44,7 @@ class Horizon: SKNode {
 
 extension Horizon: AttitudeSettable {
     
-    func setAttitude(attitude: AttitudeType) {
+    func setAttitude(_ attitude: AttitudeType) {
         gimbalNode.run(attitude.pitchAction(sceneSize: sceneSize))
         run(attitude.rollAction())
     }

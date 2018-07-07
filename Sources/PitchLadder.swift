@@ -48,7 +48,7 @@ class PitchLadder: SKNode {
 
 extension PitchLadder: AttitudeSettable {
     
-    func setAttitude(attitude: AttitudeType) {
+    func setAttitude(_ attitude: AttitudeType) {
         cropNode.run(attitude.pitchAction(sceneSize: sceneSize))
         maskNode.run(attitude.pitchReverseAction(sceneSize: sceneSize))
         run(attitude.rollAction())

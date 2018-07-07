@@ -18,7 +18,7 @@ protocol AttitudeType {
 }
 
 protocol AttitudeSettable {
-    func setAttitude(attitude: AttitudeType)
+    func setAttitude(_ attitude: AttitudeType)
 }
 
 extension AttitudeType {
