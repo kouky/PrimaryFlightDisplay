@@ -14,7 +14,7 @@ class TapeCellContainer: SKNode {
     private let style: TapeIndicatorStyleType
     
     enum Error: Swift.Error {
-        case SeedModelLowerValueMustBeZero
+        case seedModelLowerValueMustBeZero
     }
     
     init(seedModel: TapeCellModelType, style: TapeIndicatorStyleType) throws {
@@ -26,7 +26,7 @@ class TapeCellContainer: SKNode {
         super.init()
         
         guard seedModel.lowerValue == 0 else {
-            throw Error.SeedModelLowerValueMustBeZero
+            throw Error.seedModelLowerValueMustBeZero
         }
 
         cellTriad.forEach { cell in
@@ -41,9 +41,9 @@ class TapeCellContainer: SKNode {
     
     func actionForValue(value: Double) -> SKAction {
         switch style.type {
-        case .Continuous:
+        case .continuous:
             return SKAction.move(to: positionForContinuousValue(value: value), duration: 0.05)
-        case .Compass:
+        case .compass:
             return SKAction.move(to: positionForCompassValue(compassValue: value), duration: 0.2)
         }
     }
@@ -73,9 +73,9 @@ class TapeCellContainer: SKNode {
     
     private func valueForPosition() -> Double {
         switch style.type {
-        case .Continuous:
+        case .continuous:
             return continuousValueForPosition()
-        case .Compass:
+        case .compass:
             return continuousValueForPosition().compassValue
         }
     }
@@ -84,9 +84,9 @@ class TapeCellContainer: SKNode {
         // TODO: Account for initial value
         let valuePosition =  -value * Double(style.pointsPerUnitValue)
         switch style.markerJustification {
-        case .Top, .Bottom:
+        case .top, .bottom:
             return CGPoint(x: CGFloat(valuePosition), y: position.y)
-        case .Left, .Right:
+        case .left, .right:
             return CGPoint(x: position.x, y: CGFloat(valuePosition))
         }
     }
@@ -106,9 +106,9 @@ class TapeCellContainer: SKNode {
     
     private func continuousValueForPosition() -> Double {
         switch style.markerJustification {
-        case .Top, .Bottom:
+        case .top, .bottom:
             return -Double(position.x) / Double(style.pointsPerUnitValue)
-        case .Left, .Right:
+        case .left, .right:
             return -Double(position.y) / Double(style.pointsPerUnitValue)
         }
     }

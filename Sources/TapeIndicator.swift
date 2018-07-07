@@ -25,12 +25,12 @@ class TapeIndicator: SKNode {
     
     init(style: TapeIndicatorStyleType) {
         switch style.markerJustification {
-        case .Bottom, .Top:
-            if style.type == .Compass && (style.size.width / CGFloat(style.pointsPerUnitValue) > CGFloat(style.optimalCellMagnitude)) {
+        case .bottom, .top:
+            if style.type == .compass && (style.size.width / CGFloat(style.pointsPerUnitValue) > CGFloat(style.optimalCellMagnitude)) {
                 fatalError("Invalid Compass style: Decrease width and / or increase pointsPerUnitValue")
             }
-        case .Left, .Right:
-            if style.type == .Compass && (style.size.height / CGFloat(style.pointsPerUnitValue) > CGFloat(style.optimalCellMagnitude)) {
+        case .left, .right:
+            if style.type == .compass && (style.size.height / CGFloat(style.pointsPerUnitValue) > CGFloat(style.optimalCellMagnitude)) {
                 fatalError("Invalid Compass style: Decrease height and / or increase pointsPerUnitValue")
             }
         }

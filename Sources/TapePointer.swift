@@ -65,15 +65,15 @@ class TapePointer: SKNode {
         legendValueLabelNode?.fontColor = style.markerTextColor.withAlphaComponent(0.7)
 
         switch style.markerJustification {
-        case .Top:
+        case .top:
             valueLabel.horizontalAlignmentMode = .center
             valueLabel.verticalAlignmentMode = .top
             valueLabel.position = CGPoint(x: 0, y: style.size.height/2 - CGFloat(style.markerTextOffset))
-        case .Bottom:
+        case .bottom:
             valueLabel.horizontalAlignmentMode = .center
             valueLabel.verticalAlignmentMode = .bottom
             valueLabel.position = CGPoint(x: 0, y: CGFloat(style.markerTextOffset) - style.size.height/2)
-        case .Left:
+        case .left:
             valueLabel.horizontalAlignmentMode = .left
             valueLabel.verticalAlignmentMode = .center
             valueLabel.position = CGPoint(
@@ -91,7 +91,7 @@ class TapePointer: SKNode {
             legendValueLabelNode?.position = CGPoint(
                 x: CGFloat(style.markerTextOffset) - style.size.width/2,
                 y: -backgroundShapeDimensions().thirdWidth)
-        case .Right:
+        case .right:
             valueLabel.horizontalAlignmentMode = .right
             valueLabel.verticalAlignmentMode = .center
             valueLabel.position = CGPoint(
@@ -125,16 +125,16 @@ class TapePointer: SKNode {
         let translateTransform, rotateTransform: CGAffineTransform
 
         switch style.markerJustification {
-        case .Top:
+        case .top:
             translateTransform = CGAffineTransform(translationX: -dimensions.halfWidth, y: 0)
             rotateTransform = CGAffineTransform(rotationAngle: CGFloat.pi / -2)
-        case .Bottom:
+        case .bottom:
             translateTransform = CGAffineTransform(translationX: -dimensions.halfWidth, y: 0)
             rotateTransform = CGAffineTransform(rotationAngle: CGFloat.pi / -2)
-        case .Left:
+        case .left:
             translateTransform = CGAffineTransform(translationX: -dimensions.halfWidth, y: 0)
             rotateTransform = CGAffineTransform.identity
-        case .Right:
+        case .right:
             translateTransform = CGAffineTransform(translationX: -dimensions.halfWidth, y: 0)
             rotateTransform = CGAffineTransform(rotationAngle: CGFloat.pi)
         }
@@ -154,11 +154,11 @@ class TapePointer: SKNode {
         let width, halfWidth, thirdWidth: CGFloat
         
         switch style.markerJustification {
-        case .Top, .Bottom:
+        case .top, .bottom:
             width = CGFloat(style.size.height)
             halfWidth = width / 2
             thirdWidth = width / 3
-        case .Left, .Right:
+        case .left, .right:
             width = style.size.width
             halfWidth = width / 2
             thirdWidth = width / 3

@@ -26,13 +26,13 @@ class PitchLadder: SKNode {
         let degreeValues = Array(stride(from: 5, to: 91, by: 5))
         
         let skyPitchLines = degreeValues.map { degree in
-            return (degree, (degree % 10 == 0) ? PitchLineType.Major : PitchLineType.Minor)
+            return (degree, (degree % 10 == 0) ? PitchLineType.major : PitchLineType.minor)
         }
         let pitchLines = skyPitchLines + skyPitchLines.map { ($0.0 * -1, $0.1) }
         for (degree, type) in pitchLines {
             cropNode.addChild(builder.pitchLine(sceneSize: sceneSize, degree: degree, type: type))
         }
-        for (degree, type) in pitchLines.filter({ $1 == .Major }) {
+        for (degree, type) in pitchLines.filter({ $1 == .major }) {
             cropNode.addChild(builder.leftPitchLineLabel(sceneSize: sceneSize, degree: degree, type: type))
             cropNode.addChild(builder.rightPitchLineLabel(sceneSize: sceneSize, degree: degree, type: type))
         }
@@ -56,8 +56,8 @@ extension PitchLadder: AttitudeSettable {
 }
 
 private enum PitchLineType {
-    case Major
-    case Minor
+    case major
+    case minor
 }
 
 private struct PitchLineBuilder {
@@ -111,8 +111,8 @@ private struct PitchLineBuilder {
     
     private func widthForPitchLineType(type: PitchLineType) -> CGFloat {
         switch type {
-        case .Major: return CGFloat(style.majorLineWidth)
-        case .Minor: return CGFloat(style.minorLineWidth)
+        case .major: return CGFloat(style.majorLineWidth)
+        case .minor: return CGFloat(style.minorLineWidth)
         }
     }
     

@@ -96,15 +96,15 @@ private class BankArc: SKNode {
         }.map {
             (degree: $0, displayText: "\(abs($0))")
         }.forEach { marker in
-            let type: BankArcMarkerType = marker.degree % 15 == 0 ? .Major : . Minor
+            let type: BankArcMarkerType = marker.degree % 15 == 0 ? .major : . minor
             addChild(BankArcMarker(marker: marker, type: type, style: style))
         }
     }
 }
 
 private enum BankArcMarkerType {
-    case Major
-    case Minor
+    case major
+    case minor
 }
 
 private class BankArcMarker: SKNode {
@@ -118,7 +118,7 @@ private class BankArcMarker: SKNode {
             SKAction.move(by: CGVector(dx: offset * sin(radians), dy: offset * cos(radians)), duration: 0)
         }
         
-        let height = (type == .Major ? style.majorMarkerHeight : style.minorMarkerHeight)
+        let height = (type == .major ? style.majorMarkerHeight : style.minorMarkerHeight)
         let line = SKShapeNode(rectOf: CGSize(width: 0, height: height))
         line.strokeColor = style.arcStrokeColor
         line.fillColor = style.arcStrokeColor
@@ -127,7 +127,7 @@ private class BankArcMarker: SKNode {
         line.isAntialiased = true
         addChild(line)
         
-        if type == .Major {
+        if type == .major {
             let label = SKLabelNode(text: marker.displayText)
             label.fontName = style.font.family
             label.fontSize = style.font.size

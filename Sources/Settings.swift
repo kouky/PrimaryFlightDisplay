@@ -160,15 +160,15 @@ public struct DefaultBankIndicatorStyle: BankIndicatorStyleType {
 // MARK: TapeIndicator
 
 public enum TapeType {
-    case Compass
-    case Continuous
+    case compass
+    case continuous
 }
 
 public enum TapeMarkerJustification {
-    case Top
-    case Bottom
-    case Left
-    case Right
+    case top
+    case bottom
+    case left
+    case right
 }
 
 public typealias Legend = (key: String, value: String)
@@ -194,12 +194,12 @@ public protocol TapeIndicatorStyleType {
 
 public struct DefaultAltimeterStyle: TapeIndicatorStyleType {
     public var size = CGSize(width: 60, height: 300)
-    public var type = TapeType.Continuous
+    public var type = TapeType.continuous
     public var backgroundColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     public var pointerBackgroundColor = SKColor.black
     public var font: FontType = DefaultFont()
 
-    public var markerJustification = TapeMarkerJustification.Left
+    public var markerJustification = TapeMarkerJustification.left
     public var pointsPerUnitValue: UInt = 15
     public var majorMarkerLength = 10
     public var minorMarkerLength = 5
@@ -215,12 +215,12 @@ public struct DefaultAltimeterStyle: TapeIndicatorStyleType {
 
 public struct DefaultAirspeedIndicatorStyle: TapeIndicatorStyleType {
     public var size = CGSize(width: 60, height: 300)
-    public var type = TapeType.Continuous
+    public var type = TapeType.continuous
     public var backgroundColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     public var pointerBackgroundColor = SKColor.black
     public var font: FontType = DefaultFont()
     
-    public var markerJustification = TapeMarkerJustification.Right
+    public var markerJustification = TapeMarkerJustification.right
     public var pointsPerUnitValue: UInt = 5
     public var majorMarkerLength = 10
     public var minorMarkerLength = 5
@@ -236,12 +236,12 @@ public struct DefaultAirspeedIndicatorStyle: TapeIndicatorStyleType {
 
 public struct DefaultHeadingIndicatorStyle: TapeIndicatorStyleType {
     public var size = CGSize(width: 400, height: 60)
-    public var type = TapeType.Compass
+    public var type = TapeType.compass
     public var backgroundColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     public var pointerBackgroundColor = SKColor.black
     public var font: FontType = DefaultFont()
     
-    public var markerJustification = TapeMarkerJustification.Bottom
+    public var markerJustification = TapeMarkerJustification.bottom
     public var pointsPerUnitValue: UInt = 5
     public var majorMarkerLength = 10
     public var minorMarkerLength = 5
@@ -259,9 +259,9 @@ extension TapeIndicatorStyleType {
     
     public func labelForValue(value: Int) -> String  {
         switch type {
-        case .Continuous:
+        case .continuous:
             return "\(value)"
-        case .Compass:
+        case .compass:
             let compassValue = Int(value.compassValue)
             let cardinalDirections = [0: "N", 45: "NE", 90: "E", 135: "SE", 180: "S", 225: "SW", 270: "W", 315: "NW"]
             
@@ -275,23 +275,23 @@ extension TapeIndicatorStyleType {
     
     public var seedModel: TapeCellModelType {
         switch type {
-        case .Continuous:
+        case .continuous:
             return ContinuousTapeCellModel(lowerValue: 0, upperValue: optimalCellMagnitude)
-        case .Compass:
+        case .compass:
             return CompassTapeCellModel(lowerValue: 0, upperValue: optimalCellMagnitude)
         }
     }
 
     public var optimalCellMagnitude: Int {
         switch type {
-        case .Continuous:
+        case .continuous:
             switch markerJustification {
-            case .Bottom, .Top:
+            case .bottom, .top:
                 return Int(round(size.width / CGFloat(pointsPerUnitValue)))
-            case .Left, .Right:
+            case .left, .right:
                 return Int(round(size.height / CGFloat(pointsPerUnitValue)))
             }
-        case .Compass:
+        case .compass:
             return 120
         }
     }    
