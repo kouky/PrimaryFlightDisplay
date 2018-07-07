@@ -18,7 +18,7 @@ class TapeCell: SKNode {
     }
     
     var positionForZeroValue: CGPoint {
-        return positionForValue(0)
+        return positionForValue(value: 0)
     }
     
     private let style: TapeIndicatorStyleType
@@ -48,16 +48,16 @@ class TapeCell: SKNode {
         Array(model.lowerValue..<model.upperValue)
             .flatMap({CellMarker(value: $0, style: style)})
             .forEach { marker in
-                addChild(buildLineNode(marker))
+                addChild(buildLineNode(marker: marker))
                 
                 if marker.isMajor {
-                    addChild(buildLabelNode(marker))
+                    addChild(buildLabelNode(marker: marker))
                 }
             }
     }
     
     private func buildLineNode(marker: CellMarker) -> SKShapeNode {
-        let line =  SKShapeNode(rectOfSize: marker.lineSize)
+        let line =  SKShapeNode(rectOf: marker.lineSize)
         line.strokeColor = style.markerColor
         line.fillColor = style.markerColor
         
@@ -84,7 +84,7 @@ class TapeCell: SKNode {
     }
     
     private func buildLabelNode(marker: CellMarker) -> SKLabelNode {
-        let label = SKLabelNode(text: style.labelForValue(marker.value))
+        let label = SKLabelNode(text: style.labelForValue(value: marker.value))
         label.fontName = style.font.family
         label.fontSize = style.font.size
         label.horizontalAlignmentMode = marker.labelAlignment.horizontal
@@ -136,10 +136,10 @@ private struct CellMarker {
         }
         
         switch style.markerJustification {
-        case .Top: labelAlignment = (horizontal: .Center, vertical: .Top)
-        case .Bottom: labelAlignment = (horizontal: .Center, vertical: .Bottom)
-        case .Left: labelAlignment = (horizontal: .Left, vertical: .Center)
-        case .Right: labelAlignment = (horizontal: .Right, vertical: .Center)
+        case .Top: labelAlignment = (horizontal: .center, vertical: .top)
+        case .Bottom: labelAlignment = (horizontal: .center, vertical: .bottom)
+        case .Left: labelAlignment = (horizontal: .left, vertical: .center)
+        case .Right: labelAlignment = (horizontal: .right, vertical: .center)
         }
     }
 }

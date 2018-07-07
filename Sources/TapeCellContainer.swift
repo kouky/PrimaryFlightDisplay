@@ -13,7 +13,7 @@ class TapeCellContainer: SKNode {
     private let cellTriad: TapeCellTriad
     private let style: TapeIndicatorStyleType
     
-    enum Error: ErrorType {
+    enum Error: Swift.Error {
         case SeedModelLowerValueMustBeZero
     }
     
@@ -42,27 +42,29 @@ class TapeCellContainer: SKNode {
     func actionForValue(value: Double) -> SKAction {
         switch style.type {
         case .Continuous:
-            return SKAction.moveTo(positionForContinuousValue(value), duration: 0.05)
+            return SKAction.move(to: positionForContinuousValue(value: value), duration: 0.05)
         case .Compass:
-            return SKAction.moveTo(positionForCompassValue(value), duration: 0.2)
+            return SKAction.move(to: positionForCompassValue(compassValue: value), duration: 0.2)
         }
     }
     
     func recycleCells() {
-        let status = cellTriad.statusForValue(valueForPosition())
+        guard let status = try? cellTriad.statusForValue(value: valueForPosition()) else {
+            return
+        }
         
         switch status {
         case ((true, let cell1),  (false, _),  (false, let cell3)):
-            recycleCell(cell3, model: cell1.model.previous())
+            recycleCell(cell: cell3, model: cell1.model.previous())
             break
         case ((false, let cell1),  (false, _),  (true, let cell3)):
-            recycleCell(cell1, model: cell3.model.next())
+            recycleCell(cell: cell1, model: cell3.model.next())
             break
         case ((false, let cell1),  (false, let cell2),  (false, let cell3)):
-            let model = modelForValue(valueForPosition(), fromModel: cell2.model)
-            recycleCell(cell1, model: model.previous())
-            recycleCell(cell2, model: model)
-            recycleCell(cell3, model: model.next())
+            let model = modelForValue(value: valueForPosition(), fromModel: cell2.model)
+            recycleCell(cell: cell1, model: model.previous())
+            recycleCell(cell: cell2, model: model)
+            recycleCell(cell: cell3, model: model.next())
             break
         default:
             break
@@ -90,15 +92,15 @@ class TapeCellContainer: SKNode {
     }
     
     private func positionForCompassValue(compassValue: Double) -> CGPoint {
-        let left = leftwardValueDeltaFromCompassValue(continuousValueForPosition().compassValue, toCompassValue: compassValue)
-        let right = rightwardValueDeltaFromCompassValue(continuousValueForPosition().compassValue, toCompassValue: compassValue)
+        let left = leftwardValueDeltaFromCompassValue(fromCompassValue: continuousValueForPosition().compassValue, toCompassValue: compassValue)
+        let right = rightwardValueDeltaFromCompassValue(fromCompassValue: continuousValueForPosition().compassValue, toCompassValue: compassValue)
         
         if abs(left) < abs(right) {
             let newContinuousValue = continuousValueForPosition() + left
-            return positionForContinuousValue(newContinuousValue)
+            return positionForContinuousValue(value: newContinuousValue)
         } else {
             let newContinuousValue = continuousValueForPosition() + right
-            return positionForContinuousValue(newContinuousValue)
+            return positionForContinuousValue(value: newContinuousValue)
         }
     }
     
@@ -130,12 +132,12 @@ class TapeCellContainer: SKNode {
     }
     
     private func modelForValue(value: Double, fromModel model: TapeCellModelType) -> TapeCellModelType {
-        if model.containsValue(value) {
+        if model.containsValue(value: value) {
             return model
         } else if value < model.midValue {
-            return modelForValue(value, fromModel: model.previous())
+            return modelForValue(value: value, fromModel: model.previous())
         } else {
-            return modelForValue(value, fromModel: model.next())
+            return modelForValue(value: value, fromModel: model.next())
         }
     }
     

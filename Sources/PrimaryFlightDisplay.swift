@@ -20,9 +20,9 @@ public class PrimaryFlightDisplayView: SKView {
         commonInit(settings: DefaultSettings())
     }
     
-    private func commonInit(settings settings: SettingsType) {
+    private func commonInit(settings: SettingsType) {
         let scene = PrimaryFlightDisplayScene(size: bounds.size, settings: settings)
-        scene.scaleMode = .AspectFill
+        scene.scaleMode = .aspectFill
         scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         presentScene(scene)
         
@@ -32,25 +32,25 @@ public class PrimaryFlightDisplayView: SKView {
     
     public func setHeadingDegree(degree: Double) {
         if let scene = scene as? PrimaryFlightDisplayScene {
-            scene.setHeadingDegree(degree)
+            scene.setHeadingDegree(degree: degree)
         }
     }
     
     public func setAirSpeed(airSpeed: Double) {
         if let scene = scene as? PrimaryFlightDisplayScene {
-            scene.setAirSpeed(airSpeed)
+            scene.setAirSpeed(airSpeed: airSpeed)
         }
     }
 
     public func setAltitude(altitude: Double) {
         if let scene = scene as? PrimaryFlightDisplayScene {
-            scene.setAltitude(altitude)
+            scene.setAltitude(altitude: altitude)
         }
     }
     
-    public func setAttitude(rollRadians rollRadians: Double, pitchRadians: Double) {
+    public func setAttitude(rollRadians: Double, pitchRadians: Double) {
         if let scene = scene as? PrimaryFlightDisplayScene {
-            scene.setAttitude(Attitude(pitchRadians: pitchRadians, rollRadians: rollRadians))
+            scene.setAttitude(attitude: Attitude(pitchRadians: pitchRadians, rollRadians: rollRadians))
         }
     }
 }
@@ -80,8 +80,8 @@ class PrimaryFlightDisplayScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func didMoveToView(view: SKView) {
-        scaleMode = .ResizeFill
+    override func didMove(to view: SKView) {
+        scaleMode = .resizeFill
         addChild(horizon)
         addChild(pitchLadder)
         addChild(attitudeReferenceIndex)
@@ -91,7 +91,7 @@ class PrimaryFlightDisplayScene: SKScene {
         addChild(headingIndicator)
     }
     
-    override func didChangeSize(oldSize: CGSize) {
+    override func didChangeSize(_ oldSize: CGSize) {
         altimeter.position = CGPoint(x: size.width/2 - altimeter.style.size.width/2, y: 0)
         airSpeedIndicator.position = CGPoint(x: -size.width/2 + airSpeedIndicator.style.size.width/2, y: 0)
         headingIndicator.position = CGPoint(x: 0, y: size.height/2 - headingIndicator.style.size.height/2)
@@ -119,8 +119,8 @@ class PrimaryFlightDisplayScene: SKScene {
 extension PrimaryFlightDisplayScene: AttitudeSettable {
 
     func setAttitude(attitude: AttitudeType) {
-        horizon.setAttitude(attitude)
-        pitchLadder.setAttitude(attitude)
-        bankIndicator.setAttitude(attitude)
+        horizon.setAttitude(attitude: attitude)
+        pitchLadder.setAttitude(attitude: attitude)
+        bankIndicator.setAttitude(attitude: attitude)
     }
 }

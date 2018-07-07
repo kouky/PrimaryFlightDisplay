@@ -18,7 +18,7 @@ class TapeIndicator: SKNode {
     
     var value: Double = 0 {
         didSet {
-            cellContainer.runAction(cellContainer.actionForValue(value))
+            cellContainer.run(cellContainer.actionForValue(value: value))
             pointer.value = Int(value)
         }
     }
@@ -45,9 +45,9 @@ class TapeIndicator: SKNode {
         pointer = TapePointer(initialValue: style.seedModel.lowerValue, style: style)
         super.init()
 
-        let backgroundShape = SKShapeNode(rectOfSize: style.size, cornerRadius: 2)
+        let backgroundShape = SKShapeNode(rectOf: style.size, cornerRadius: 2)
         backgroundShape.fillColor = style.backgroundColor
-        backgroundShape.strokeColor = SKColor.clearColor()
+        backgroundShape.strokeColor = SKColor.clear
 
         backgroundShape.zPosition = 0
         cellContainer.zPosition = 1
@@ -56,7 +56,7 @@ class TapeIndicator: SKNode {
         cropNode.addChild(backgroundShape)
         cropNode.addChild(cellContainer)
         cropNode.addChild(pointer)
-        cropNode.maskNode = SKSpriteNode(color: SKColor.blackColor(), size: style.size)
+        cropNode.maskNode = SKSpriteNode(color: SKColor.black, size: style.size)
         addChild(cropNode)
     }
     

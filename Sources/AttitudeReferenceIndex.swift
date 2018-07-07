@@ -16,8 +16,8 @@ class AttitudeReferenceIndex: SKNode {
         self.style = style
         super.init()
         
-        addChild(buildLeftBar(transform: CGAffineTransformMakeTranslation(CGFloat(-style.sideBarOffset), 0)))
-        addChild(buildLeftBar(transform: CGAffineTransformMake(-1, 0, 0, 1, CGFloat(style.sideBarOffset), 0)))
+        addChild(buildLeftBar(transform: CGAffineTransform(translationX: CGFloat(-style.sideBarOffset), y: 0)))
+        addChild(buildLeftBar(transform: CGAffineTransform(a: -1, b: 0, c: 0, d: 1, tx: CGFloat(style.sideBarOffset), ty: 0)))
         addChild(buildCenterBar())
     }
 
@@ -25,22 +25,22 @@ class AttitudeReferenceIndex: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func buildLeftBar(transform transform: CGAffineTransform) -> SKShapeNode {
+    private func buildLeftBar(transform: CGAffineTransform) -> SKShapeNode {
         let width = CGFloat(style.sideBarWidth)
         let height = CGFloat(style.sideBarHeight)
         
-        let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, -width, 2)
-        CGPathAddLineToPoint(path, nil, 0, 2)
-        CGPathAddLineToPoint(path, nil, 0, -height)
-        CGPathAddLineToPoint(path, nil, -4, -height)
-        CGPathAddLineToPoint(path, nil, -4, -2)
-        CGPathAddLineToPoint(path, nil, -width, -2)
-        CGPathCloseSubpath(path)
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: -width, y: 2))
+        path.addLine(to: CGPoint(x: 0, y: 2))
+        path.addLine(to: CGPoint(x: 0, y: -height))
+        path.addLine(to: CGPoint(x: -4, y: -height))
+        path.addLine(to: CGPoint(x: -4, y: -2))
+        path.addLine(to: CGPoint(x: -width, y: -2))
+        path.closeSubpath()
 
         var trans = transform
-        let transformedPath = withUnsafeMutablePointer(&trans) {
-            CGPathCreateMutableCopyByTransformingPath(path, $0)
+        let transformedPath = withUnsafeMutablePointer(to: &trans) {
+            path.mutableCopy(using: $0)
         }
         
         let shape = SKShapeNode(path: transformedPath!)
@@ -51,12 +51,12 @@ class AttitudeReferenceIndex: SKNode {
     
     private func buildCenterBar() -> SKShapeNode {
         let halfWidth = CGFloat(style.centerBarWidth) / 2
-        let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, -halfWidth, 2)
-        CGPathAddLineToPoint(path, nil, halfWidth, 2)
-        CGPathAddLineToPoint(path, nil, halfWidth, -2)
-        CGPathAddLineToPoint(path, nil, -halfWidth, -2)
-        CGPathCloseSubpath(path)
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: -halfWidth, y: 2))
+        path.addLine(to: CGPoint(x: halfWidth, y: 2))
+        path.addLine(to: CGPoint(x: halfWidth, y: -2))
+        path.addLine(to: CGPoint(x: -halfWidth, y: -2))
+        path.closeSubpath()
         
         let shape = SKShapeNode(path: path)
         shape.fillColor = style.fillColor

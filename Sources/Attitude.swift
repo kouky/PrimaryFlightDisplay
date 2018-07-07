@@ -13,8 +13,8 @@ protocol AttitudeType {
     var pitchRadians: Double { get }
     
     func rollAction() -> SKAction
-    func pitchAction(sceneSize sceneSize: CGSize) -> SKAction
-    func pitchReverseAction(sceneSize sceneSize: CGSize) -> SKAction
+    func pitchAction(sceneSize: CGSize) -> SKAction
+    func pitchReverseAction(sceneSize: CGSize) -> SKAction
 }
 
 protocol AttitudeSettable {
@@ -23,17 +23,17 @@ protocol AttitudeSettable {
 
 extension AttitudeType {
     func rollAction() -> SKAction {
-        return SKAction.rotateToAngle(CGFloat(rollRadians), duration: 0.05, shortestUnitArc: true)
+        return SKAction.rotate(toAngle: CGFloat(rollRadians), duration: 0.05, shortestUnitArc: true)
     }
     
-    func pitchAction(sceneSize sceneSize: CGSize) -> SKAction {
+    func pitchAction(sceneSize: CGSize) -> SKAction {
         let displacement = CGFloat(pitchRadians) * -1 * sceneSize.pointsPerRadian
-        return SKAction.moveToY(displacement, duration: 0.05)
+        return SKAction.moveTo(y: displacement, duration: 0.05)
     }
     
-    func pitchReverseAction(sceneSize sceneSize: CGSize) -> SKAction {
+    func pitchReverseAction(sceneSize: CGSize) -> SKAction {
         let displacement = CGFloat(pitchRadians) * sceneSize.pointsPerRadian
-        return SKAction.moveToY(displacement, duration: 0.05)
+        return SKAction.moveTo(y: displacement, duration: 0.05)
     }
 }
 

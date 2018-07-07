@@ -21,7 +21,7 @@ class Horizon: SKNode {
         self.sceneSize = sceneSize
         skyNode = SKSpriteNode(color: style.skyColor, size: CGSize(width: 100, height: 100))
         groundNode = SKSpriteNode(color: style.groundColor, size: CGSize(width: 100, height: 100))
-        zeroPitchLine = SKShapeNode(rectOfSize: CGSize(width: 2 * sceneSize.width, height: 1))
+        zeroPitchLine = SKShapeNode(rectOf: CGSize(width: 2 * sceneSize.width, height: 1))
         super.init()
         
         skyNode.size = CGSize(width: sceneSize.width * 2, height: sceneSize.height * 2)
@@ -45,8 +45,8 @@ class Horizon: SKNode {
 extension Horizon: AttitudeSettable {
     
     func setAttitude(attitude: AttitudeType) {
-        gimbalNode.runAction(attitude.pitchAction(sceneSize: sceneSize))
-        runAction(attitude.rollAction())
+        gimbalNode.run(attitude.pitchAction(sceneSize: sceneSize))
+        run(attitude.rollAction())
     }
 }
 

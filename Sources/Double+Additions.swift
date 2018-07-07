@@ -8,7 +8,7 @@
 
 extension Double {
     var compassValue: Double {
-        var value = self % 360
+        var value = self.truncatingRemainder(dividingBy: 360)
         
         if value < 0 {
             value = 360 + value

@@ -28,7 +28,7 @@ class BankIndicator: SKNode {
 extension BankIndicator: AttitudeSettable {
     
     func setAttitude(attitude: AttitudeType) {
-        bankArc.runAction(attitude.rollAction())
+        bankArc.run(attitude.rollAction())
     }
 }
 
@@ -37,16 +37,16 @@ private class SkyPointer: SKNode {
     init(style: BankIndicatorStyleType) {
         super.init()
         
-        let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, -CGFloat(style.skyPointerWidth)/2, 0)
-        CGPathAddLineToPoint(path, nil, CGFloat(style.skyPointerWidth)/2, 0)
-        CGPathAddLineToPoint(path, nil, 0, CGFloat(style.skyPointerHeight))
-        CGPathCloseSubpath(path)
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: -CGFloat(style.skyPointerWidth)/2, y: 0))
+        path.addLine(to: CGPoint(x: CGFloat(style.skyPointerWidth)/2, y: 0))
+        path.addLine(to: CGPoint(x: 0, y: CGFloat(style.skyPointerHeight)))
+        path.closeSubpath()
         
         let shape = SKShapeNode(path: path)
         shape.fillColor = style.skyPointerFillColor
         shape.strokeColor = style.skyPointerFillColor
-        shape.lineJoin = .Miter
+        shape.lineJoin = .miter
         shape.position = CGPoint(x: 0, y: style.arcRadius - style.skyPointerHeight - style.arcLineWidth*2)
         addChild(shape)
     }
@@ -58,7 +58,7 @@ private class SkyPointer: SKNode {
 
 private class BankArc: SKNode {
     
-    private let degreeValues = Array((-175).stride(to: 181, by: 5))
+    private let degreeValues = Array(stride(from: -175, to: 181, by: 5))
     private let style: BankIndicatorStyleType
     
     init(style: BankIndicatorStyleType) {
@@ -79,7 +79,7 @@ private class BankArc: SKNode {
         let arc = SKShapeNode(circleOfRadius: CGFloat(style.arcRadius))
         let cropNode = SKCropNode()
         let maskNodeEdgeSize = style.arcRadius * 2 + style.arcLineWidth
-        let maskNode = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: maskNodeEdgeSize, height: maskNodeEdgeSize))
+        let maskNode = SKSpriteNode(color: SKColor.black, size: CGSize(width: maskNodeEdgeSize, height: maskNodeEdgeSize))
         let maxDegree = style.arcMaximumDisplayDegree
         
         arc.lineWidth = CGFloat(style.arcLineWidth)
@@ -113,18 +113,18 @@ private class BankArcMarker: SKNode {
         super.init()
         
         let radians = marker.degree.radians
-        let rotateAction = SKAction.rotateByAngle(-radians, duration: 0)
+        let rotateAction = SKAction.rotate(byAngle: -radians, duration: 0)
         let moveAction = { (offset: CGFloat) -> SKAction in
-            SKAction.moveBy(CGVector(dx: offset * sin(radians), dy: offset * cos(radians)), duration: 0)
+            SKAction.move(by: CGVector(dx: offset * sin(radians), dy: offset * cos(radians)), duration: 0)
         }
         
         let height = (type == .Major ? style.majorMarkerHeight : style.minorMarkerHeight)
-        let line = SKShapeNode(rectOfSize: CGSize(width: 0, height: height))
+        let line = SKShapeNode(rectOf: CGSize(width: 0, height: height))
         line.strokeColor = style.arcStrokeColor
         line.fillColor = style.arcStrokeColor
         let offset = CGFloat(style.arcRadius + (height / 2))
-        line.runAction(SKAction.sequence([rotateAction, moveAction(offset)]))
-        line.antialiased = true
+        line.run(SKAction.sequence([rotateAction, moveAction(offset)]))
+        line.isAntialiased = true
         addChild(line)
         
         if type == .Major {
@@ -134,7 +134,7 @@ private class BankArcMarker: SKNode {
             label.fontColor = style.textColor
             
             let offset = CGFloat(style.arcRadius + style.markerTextOffset)
-            label.runAction(SKAction.sequence([rotateAction, moveAction(offset)]))
+            label.run(SKAction.sequence([rotateAction, moveAction(offset)]))
             addChild(label)
         }
     }

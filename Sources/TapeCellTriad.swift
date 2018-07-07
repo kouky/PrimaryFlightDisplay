@@ -17,26 +17,16 @@ class TapeCellTriad {
         cells = [cell1, cell2, cell3]
     }
     
-    func statusForValue(value: Double) -> (TapeCellStatus, TapeCellStatus, TapeCellStatus) {
-        
-        let statusCells = cells
-            .sort { $0.0.model.midValue < $0.1.model.midValue }
-            .map  { ($0.model.containsValue(value), $0) }
+    func statusForValue(value: Double) throws -> (TapeCellStatus, TapeCellStatus, TapeCellStatus) {
+        let statusCells = try cells
+            .sorted { (a, b) throws in a.model.midValue < b.model.midValue }
+            .map    { ($0.model.containsValue(value: value), $0) }
         return (statusCells[0], statusCells[1], statusCells[2])
     }
 }
 
-extension TapeCellTriad: SequenceType {
-    
-    func generate() -> AnyGenerator<TapeCell> {
-        var nextIndex = 0
-        
-        return AnyGenerator {
-            guard nextIndex < self.cells.count else { return nil }
-            
-            let cell = self.cells[nextIndex]
-            nextIndex += 1
-            return cell
-        }
+extension TapeCellTriad : Sequence {
+    func makeIterator() -> Array<TapeCell>.Iterator {
+        return cells.makeIterator()
     }
 }
