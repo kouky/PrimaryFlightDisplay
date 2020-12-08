@@ -45,6 +45,7 @@ class TapeIndicator: SKNode {
         pointer = TapePointer(initialValue: style.seedModel.lowerValue, style: style)
         super.init()
 
+        isHidden = !style.visible
         let backgroundShape = SKShapeNode(rectOf: style.size, cornerRadius: 2)
         backgroundShape.fillColor = style.backgroundColor
         backgroundShape.strokeColor = SKColor.clear

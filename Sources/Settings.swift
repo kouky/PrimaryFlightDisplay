@@ -63,12 +63,14 @@ public protocol HorizonStyleType {
     var skyColor:           SKColor { get set }
     var groundColor:        SKColor { get set }
     var zeroPitchLineColor: SKColor { get set }
+    var zeroPitchLineThickness: CGFloat { get set }
 }
 
 public struct DefaultHorizonStyle: HorizonStyleType {
     public var skyColor = SKColor(red: 0.078, green: 0.490, blue: 0.816, alpha: 1.00)
     public var groundColor = SKColor(red: 0.667, green: 0.855, blue: 0.196, alpha: 1.00)
     public var zeroPitchLineColor = SKColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+    public var zeroPitchLineThickness = CGFloat(1)
     
     public init() {}
 }
@@ -82,6 +84,7 @@ public protocol AttitudeReferenceIndexStyleType {
     var sideBarHeight:  Int { get set }
     var sideBarWidth:   Int { get set }
     var sideBarOffset:  Int { get set }
+    var lineThickness:  CGFloat { get set }
 }
 
 public struct DefaultAttitudeReferenceIndexStyle: AttitudeReferenceIndexStyleType {
@@ -91,6 +94,7 @@ public struct DefaultAttitudeReferenceIndexStyle: AttitudeReferenceIndexStyleTyp
     public var sideBarWidth = 120
     public var sideBarHeight = 20
     public var sideBarOffset = 70
+    public var lineThickness = CGFloat(4)
     
     public init() {}
 }
@@ -106,6 +110,7 @@ public protocol PitchLadderStyleType {
     var majorLineWidth:     Int { get set }
     var markerTextOffset:   Int { get set }
     var magnitudeDisplayDegree: Int { get set } // Keep between 0 and 180
+    var lineThickness:  CGFloat { get set }
 }
 
 public struct DefaultPitchLadderStyle: PitchLadderStyleType {
@@ -117,6 +122,7 @@ public struct DefaultPitchLadderStyle: PitchLadderStyleType {
     public var majorLineWidth = 50
     public var markerTextOffset = 10
     public var magnitudeDisplayDegree = 40
+    public var lineThickness = CGFloat(4)
     
     public init() {}
 }
@@ -174,6 +180,7 @@ public enum TapeMarkerJustification {
 public typealias Legend = (key: String, value: String)
 
 public protocol TapeIndicatorStyleType {
+    var visible:                Bool { get set }
     var size:                   CGSize { get set }
     var type:                   TapeType { get set }
     var backgroundColor:        SKColor { get set }
@@ -193,6 +200,7 @@ public protocol TapeIndicatorStyleType {
 }
 
 public struct DefaultAltimeterStyle: TapeIndicatorStyleType {
+    public var visible = true
     public var size = CGSize(width: 60, height: 300)
     public var type = TapeType.continuous
     public var backgroundColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)
@@ -214,6 +222,7 @@ public struct DefaultAltimeterStyle: TapeIndicatorStyleType {
 }
 
 public struct DefaultAirspeedIndicatorStyle: TapeIndicatorStyleType {
+    public var visible = true
     public var size = CGSize(width: 60, height: 300)
     public var type = TapeType.continuous
     public var backgroundColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)
@@ -235,6 +244,7 @@ public struct DefaultAirspeedIndicatorStyle: TapeIndicatorStyleType {
 }
 
 public struct DefaultHeadingIndicatorStyle: TapeIndicatorStyleType {
+    public var visible = true
     public var size = CGSize(width: 400, height: 60)
     public var type = TapeType.compass
     public var backgroundColor = SKColor(red: 0, green: 0, blue: 0, alpha: 0.5)

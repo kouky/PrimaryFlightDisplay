@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target = '9.0'
   spec.osx.deployment_target = '10.10'
   spec.requires_arc = true
-  spec.swift_version = '4.1'
+  spec.swift_version = '5.0'
 
   spec.source = { git: "https://github.com/kouky/PrimaryFlightDisplay.git", tag: "#{spec.version}" }
   spec.source_files = "Sources/**/*.{h,swift}"

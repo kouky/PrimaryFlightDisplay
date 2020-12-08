@@ -30,12 +30,12 @@ class AttitudeReferenceIndex: SKNode {
         let height = CGFloat(style.sideBarHeight)
         
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: -width, y: 2))
-        path.addLine(to: CGPoint(x: 0, y: 2))
+        path.move(to: CGPoint(x: -width, y: halfLineThickness))
+        path.addLine(to: CGPoint(x: 0, y: halfLineThickness))
         path.addLine(to: CGPoint(x: 0, y: -height))
-        path.addLine(to: CGPoint(x: -4, y: -height))
-        path.addLine(to: CGPoint(x: -4, y: -2))
-        path.addLine(to: CGPoint(x: -width, y: -2))
+        path.addLine(to: CGPoint(x: -style.lineThickness, y: -height))
+        path.addLine(to: CGPoint(x: -style.lineThickness, y: -halfLineThickness))
+        path.addLine(to: CGPoint(x: -width, y: -halfLineThickness))
         path.closeSubpath()
 
         var trans = transform
@@ -52,15 +52,19 @@ class AttitudeReferenceIndex: SKNode {
     private func buildCenterBar() -> SKShapeNode {
         let halfWidth = CGFloat(style.centerBarWidth) / 2
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: -halfWidth, y: 2))
-        path.addLine(to: CGPoint(x: halfWidth, y: 2))
-        path.addLine(to: CGPoint(x: halfWidth, y: -2))
-        path.addLine(to: CGPoint(x: -halfWidth, y: -2))
+        path.move(to: CGPoint(x: -halfWidth, y: halfLineThickness))
+        path.addLine(to: CGPoint(x: halfWidth, y: halfLineThickness))
+        path.addLine(to: CGPoint(x: halfWidth, y: -halfLineThickness))
+        path.addLine(to: CGPoint(x: -halfWidth, y: -halfLineThickness))
         path.closeSubpath()
         
         let shape = SKShapeNode(path: path)
         shape.fillColor = style.fillColor
         shape.strokeColor = style.strokeColor
         return shape
+    }
+    
+    private var halfLineThickness: CGFloat {
+        return style.lineThickness * 0.5
     }
 }

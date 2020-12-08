@@ -30,7 +30,7 @@ class PitchLadder: SKNode {
         }
         let pitchLines = skyPitchLines + skyPitchLines.map { ($0.0 * -1, $0.1) }
         for (degree, type) in pitchLines {
-            cropNode.addChild(builder.pitchLine(sceneSize: sceneSize, degree: degree, type: type))
+            cropNode.addChild(builder.pitchLine(sceneSize: sceneSize, degree: degree, type: type, lineThickness: style.lineThickness))
         }
         for (degree, type) in pitchLines.filter({ $1 == .major }) {
             cropNode.addChild(builder.leftPitchLineLabel(sceneSize: sceneSize, degree: degree, type: type))
@@ -64,14 +64,14 @@ private struct PitchLineBuilder {
     
     let style: PitchLadderStyleType
     
-    func pitchLine(sceneSize: CGSize, degree: Int, type: PitchLineType) -> SKShapeNode {
+    func pitchLine(sceneSize: CGSize, degree: Int, type: PitchLineType, lineThickness: CGFloat) -> SKShapeNode {
         
         let halfWidth = halfWidthForPitchLineType(type: type)
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: -halfWidth, y: 2))
-        path.addLine(to: CGPoint(x: halfWidth, y: 2))
-        path.addLine(to: CGPoint(x: halfWidth, y: -2))
-        path.addLine(to: CGPoint(x: -halfWidth, y: -2))
+        path.move(to: CGPoint(x: -halfWidth, y: lineThickness * 0.5))
+        path.addLine(to: CGPoint(x: halfWidth, y: lineThickness * 0.5))
+        path.addLine(to: CGPoint(x: halfWidth, y: -lineThickness * 0.5))
+        path.addLine(to: CGPoint(x: -halfWidth, y: -lineThickness * 0.5))
         path.closeSubpath()
         
         var transform = CGAffineTransform(translationX: 0, y: CGFloat(degree) * sceneSize.pointsPerDegree)
